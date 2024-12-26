@@ -8,7 +8,6 @@ import {
   MdBrandingWatermark,
   MdLabelImportant,
 } from "react-icons/md";
-import SidebarRankingSkeleton from "./SidebarRankingSkeleton";
 
 export default function Sidebar() {
   const { data, error, isFetching } = useQuery({
@@ -17,7 +16,7 @@ export default function Sidebar() {
   });
 
   return (
-    <div className="flex lg:flex-col gap-4 border-r xl:basis-[20%] 2xl:basis-[30%]">
+    <div className="hidden lg:flex lg:flex-col gap-4 border-r xl:basis-[20%] 2xl:basis-[30%]">
       <ul className="flex flex-col gap-4 list-none p-4">
         <Link
           className="flex flex-row gap-4 items-center transition-all delay-0 duration-200 hover:text-red-600"
@@ -28,14 +27,8 @@ export default function Sidebar() {
         </Link>
         <Link
           className="flex flex-row gap-4 items-center transition-all delay-0 duration-200 hover:text-red-600"
-          href="/brands"
-        >
-          <MdBrandingWatermark />
-          <p>Brands</p>
-        </Link>
-        <Link
-          className="flex flex-row gap-4 items-center transition-all delay-0 duration-200 hover:text-red-600"
-          href="/brands"
+          href="/rumor
+          "
         >
           <MdLabelImportant />
           <p>Upcoming/Rumors</p>

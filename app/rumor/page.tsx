@@ -1,20 +1,15 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "next/navigation";
-
-import Sidebar from "@/components/Sidebar";
 import ProductCard from "@/components/ProductCard";
-import fetchDevicesByQuery from "@/utils/fetchDevicesByQuery";
+import Sidebar from "@/components/Sidebar";
+import fetchRumoredDevices from "@/utils/fetchRumoredDevices";
+import { useQuery } from "@tanstack/react-query";
 import ContentLoader from "react-content-loader";
 
 export default function Page() {
-  const searchParams = useSearchParams();
-  const query = searchParams.get("q");
-
   const { data, isFetching } = useQuery({
-    queryFn: () => fetchDevicesByQuery(query),
-    queryKey: [query, "search"],
+    queryKey: ["rumor"],
+    queryFn: fetchRumoredDevices,
   });
 
   if (isFetching) {
@@ -158,17 +153,19 @@ export default function Page() {
   }
 
   return (
-    <main className="flex lg:flex-row gap-4 min-h-screen">
-      <Sidebar />
-      <div className="grid grid-cols-2 gap-8 p-4 lg:grid-cols-6 lg:p-4 lg:gap-4">
-        {data?.map((phone) => (
-          <ProductCard
-            imageSrc={phone.img_src}
-            link={phone.href}
-            product_title={phone.model}
-            key={phone.href}
-          />
-        ))}
+    <main className="flex lg:flex-col min-h-screen">
+      <div className="flex lg:flex-row gap-4 min-h-screen">
+        <Sidebar />
+        <div className="grid lg:grid-cols-6 lg:p-4 lg:gap-4">
+          {data?.map((phone) => (
+            <ProductCard
+              imageSrc={phone.img_src}
+              link={phone.href}
+              product_title={phone.model}
+              key={phone.href}
+            />
+          ))}
+        </div>
       </div>
     </main>
   );

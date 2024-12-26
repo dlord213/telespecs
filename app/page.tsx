@@ -2,7 +2,6 @@
 
 import "swiper/css";
 import ProductCard from "@/components/ProductCard";
-import ProductCardSkeleton from "@/components/ProductCardSkeleton";
 import Sidebar from "@/components/Sidebar";
 import fetchLatestPhonesData from "@/utils/fetchLatestPhonesData";
 
@@ -20,7 +19,7 @@ export default function Home() {
     <main className="flex lg:flex-col min-h-screen">
       <div className="flex lg:flex-row gap-4 min-h-screen">
         <Sidebar />
-        <div className="flex lg:flex-col gap-4 xl:basis-[80%] 2xl:basis-[70%] p-4">
+        <div className="hidden lg:flex lg:flex-col gap-4 xl:basis-[80%] 2xl:basis-[70%] p-4">
           <section className="flex flex-col gap-8">
             <h1 className="font-bold xl:text-4xl">Latest devices</h1>
             {!isLatestPhonesDataFetching ? (
@@ -104,6 +103,34 @@ export default function Home() {
                 </ContentLoader>
               </div>
             )}
+          </section>
+        </div>
+        <div className="flex flex-col lg:hidden p-4 gap-4 ">
+          <section className="flex flex-col gap-8">
+            <h1 className="text-2xl font-black">Latest devices</h1>
+            <div className="grid grid-cols-2 gap-8">
+              {data?.latestPhones.map((phone) => (
+                <ProductCard
+                  product_title={phone.model}
+                  imageSrc={phone.image}
+                  link={phone.link}
+                  key={phone.link}
+                />
+              ))}
+            </div>
+          </section>
+          <section className="flex flex-col gap-8">
+            <h1 className="text-2xl font-black">Phones in store</h1>
+            <div className="grid grid-cols-2 gap-8">
+              {data?.phonesInStore.map((phone) => (
+                <ProductCard
+                  product_title={phone.model}
+                  imageSrc={phone.image}
+                  link={phone.link}
+                  key={phone.link}
+                />
+              ))}
+            </div>
           </section>
         </div>
       </div>
