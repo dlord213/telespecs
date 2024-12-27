@@ -3,7 +3,6 @@
 import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import ContentLoader from "react-content-loader";
 import fetchDeviceSpecifications from "@/utils/fetchDeviceSpecifications";
 
 export default function Page() {
@@ -19,14 +18,14 @@ export default function Page() {
   const sections = [
     <>
       <div className="flex flex-col gap-2 m-2 lg:basis-[70%] lg:p-8 lg:m-0">
-        <section className="flex flex-col gap-2 border rounded-md p-4">
+        <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
           <h1 className="lg:text-2xl text-red-500 font-bold">Network</h1>
           <div className="grid grid-cols-2">
             <p>Technology</p>
             <p>{deviceSpecificationsData?.network.technology}</p>
           </div>
         </section>
-        <section className="flex flex-col gap-2 border rounded-md p-4">
+        <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
           <h1 className="lg:text-2xl text-red-500 font-bold">Launch</h1>
           <div className="grid grid-cols-2">
             <p>Announced</p>
@@ -37,7 +36,7 @@ export default function Page() {
             <p>{deviceSpecificationsData?.launch.status}</p>
           </div>
         </section>
-        <section className="flex flex-col gap-2 border rounded-md p-4">
+        <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
           <h1 className="lg:text-2xl text-red-500 font-bold">Body</h1>
           <div className="grid grid-cols-2">
             <p>Dimensions</p>
@@ -56,7 +55,7 @@ export default function Page() {
             <p>{deviceSpecificationsData?.body.SIM}</p>
           </div>
         </section>
-        <section className="flex flex-col gap-2 border rounded-md p-4">
+        <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
           <h1 className="lg:text-2xl text-red-500 font-bold">Display</h1>
           <div className="grid grid-cols-2">
             <p>Type</p>
@@ -75,7 +74,7 @@ export default function Page() {
             <p>{deviceSpecificationsData?.display.protection}</p>
           </div>
         </section>
-        <section className="flex flex-col gap-2 border rounded-md p-4">
+        <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
           <h1 className="lg:text-2xl text-red-500 font-bold">Platform</h1>
           <div className="grid grid-cols-2">
             <p>Chipset</p>
@@ -94,7 +93,7 @@ export default function Page() {
             <p>{deviceSpecificationsData?.platform.GPU}</p>
           </div>
         </section>
-        <section className="flex flex-col gap-2 border rounded-md p-4">
+        <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
           <h1 className="lg:text-2xl text-red-500 font-bold">Memory</h1>
           <div className="grid grid-cols-2">
             <p>Card Slot</p>
@@ -105,7 +104,7 @@ export default function Page() {
             <p>{deviceSpecificationsData?.memory.internal}</p>
           </div>
         </section>
-        <section className="flex flex-col gap-2 border rounded-md p-4">
+        <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
           <h1 className="lg:text-2xl text-red-500 font-bold">Battery</h1>
           <div className="grid grid-cols-2">
             <p>Type</p>
@@ -116,7 +115,7 @@ export default function Page() {
             <p>{deviceSpecificationsData?.battery.charging.toString()}</p>
           </div>
         </section>
-        <section className="flex flex-col gap-2 border rounded-md p-4">
+        <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
           <h1 className="lg:text-2xl text-red-500 font-bold">Memory</h1>
           <div className="grid grid-cols-2">
             <p>Wi-Fi</p>
@@ -143,11 +142,11 @@ export default function Page() {
             <p>{deviceSpecificationsData?.communications.positioning}</p>
           </div>
         </section>
-        <section className="flex flex-col gap-2 border rounded-md p-4">
+        <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
           <h1 className="lg:text-2xl text-red-500 font-bold">Features</h1>
           <p>{deviceSpecificationsData?.features}</p>
         </section>
-        <section className="flex flex-col gap-2 border rounded-md p-4">
+        <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
           <h1 className="lg:text-2xl text-red-500 font-bold">Misc</h1>
           <div className="grid grid-cols-2">
             <p>Colors</p>
@@ -181,76 +180,10 @@ export default function Page() {
     return (
       <main className="flex flex-col lg:flex-row lg:gap-8">
         <div className="hidden lg:sticky lg:top-0 lg:flex flex-col gap-4 lg:basis-[30%] lg:p-8 lg:h-full">
-          <ContentLoader viewBox="0 0 340 84">
-            <rect x="0" y="0" width="67" height="11" rx="3" />
-            <rect x="76" y="0" width="140" height="11" rx="3" />
-            <rect x="127" y="48" width="53" height="11" rx="3" />
-            <rect x="187" y="48" width="72" height="11" rx="3" />
-            <rect x="18" y="48" width="100" height="11" rx="3" />
-            <rect x="0" y="71" width="37" height="11" rx="3" />
-            <rect x="18" y="23" width="140" height="11" rx="3" />
-            <rect x="166" y="23" width="173" height="11" rx="3" />
-            <rect x="0" y="0" width="67" height="11" rx="3" />
-            <rect x="76" y="0" width="140" height="11" rx="3" />
-            <rect x="127" y="48" width="53" height="11" rx="3" />
-            <rect x="187" y="48" width="72" height="11" rx="3" />
-            <rect x="18" y="48" width="100" height="11" rx="3" />
-            <rect x="0" y="71" width="37" height="11" rx="3" />
-            <rect x="18" y="23" width="140" height="11" rx="3" />
-            <rect x="166" y="23" width="173" height="11" rx="3" />
-            <rect x="0" y="0" width="67" height="11" rx="3" />
-            <rect x="76" y="0" width="140" height="11" rx="3" />
-            <rect x="127" y="48" width="53" height="11" rx="3" />
-            <rect x="187" y="48" width="72" height="11" rx="3" />
-            <rect x="18" y="48" width="100" height="11" rx="3" />
-            <rect x="0" y="71" width="37" height="11" rx="3" />
-            <rect x="18" y="23" width="140" height="11" rx="3" />
-            <rect x="166" y="23" width="173" height="11" rx="3" />
-            <rect x="0" y="0" width="67" height="11" rx="3" />
-            <rect x="76" y="0" width="140" height="11" rx="3" />
-            <rect x="127" y="48" width="53" height="11" rx="3" />
-            <rect x="187" y="48" width="72" height="11" rx="3" />
-            <rect x="18" y="48" width="100" height="11" rx="3" />
-            <rect x="0" y="71" width="37" height="11" rx="3" />
-            <rect x="18" y="23" width="140" height="11" rx="3" />
-            <rect x="166" y="23" width="173" height="11" rx="3" />
-          </ContentLoader>
+          
         </div>
         <div className="sticky top-0 flex flex-col gap-4 lg:basis-[70%] lg:p-8 h-full p-4">
-          <ContentLoader viewBox="0 0 340 84">
-            <rect x="0" y="0" width="67" height="11" rx="3" />
-            <rect x="76" y="0" width="140" height="11" rx="3" />
-            <rect x="127" y="48" width="53" height="11" rx="3" />
-            <rect x="187" y="48" width="72" height="11" rx="3" />
-            <rect x="18" y="48" width="100" height="11" rx="3" />
-            <rect x="0" y="71" width="37" height="11" rx="3" />
-            <rect x="18" y="23" width="140" height="11" rx="3" />
-            <rect x="166" y="23" width="173" height="11" rx="3" />
-            <rect x="0" y="0" width="67" height="11" rx="3" />
-            <rect x="76" y="0" width="140" height="11" rx="3" />
-            <rect x="127" y="48" width="53" height="11" rx="3" />
-            <rect x="187" y="48" width="72" height="11" rx="3" />
-            <rect x="18" y="48" width="100" height="11" rx="3" />
-            <rect x="0" y="71" width="37" height="11" rx="3" />
-            <rect x="18" y="23" width="140" height="11" rx="3" />
-            <rect x="166" y="23" width="173" height="11" rx="3" />
-            <rect x="0" y="0" width="67" height="11" rx="3" />
-            <rect x="76" y="0" width="140" height="11" rx="3" />
-            <rect x="127" y="48" width="53" height="11" rx="3" />
-            <rect x="187" y="48" width="72" height="11" rx="3" />
-            <rect x="18" y="48" width="100" height="11" rx="3" />
-            <rect x="0" y="71" width="37" height="11" rx="3" />
-            <rect x="18" y="23" width="140" height="11" rx="3" />
-            <rect x="166" y="23" width="173" height="11" rx="3" />
-            <rect x="0" y="0" width="67" height="11" rx="3" />
-            <rect x="76" y="0" width="140" height="11" rx="3" />
-            <rect x="127" y="48" width="53" height="11" rx="3" />
-            <rect x="187" y="48" width="72" height="11" rx="3" />
-            <rect x="18" y="48" width="100" height="11" rx="3" />
-            <rect x="0" y="71" width="37" height="11" rx="3" />
-            <rect x="18" y="23" width="140" height="11" rx="3" />
-            <rect x="166" y="23" width="173" height="11" rx="3" />
-          </ContentLoader>
+          
         </div>
       </main>
     );
