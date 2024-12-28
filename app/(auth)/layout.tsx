@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${workSans.className} antialiased`}>
+      <body className={`${workSans.className} antialiased 2xl:mx-[20%]`}>
         <ReactQueryProvider>{children}</ReactQueryProvider>
       </body>
     </html>

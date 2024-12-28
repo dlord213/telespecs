@@ -7,58 +7,64 @@ import fetchLatestPhonesData from "@/utils/fetchLatestPhonesData";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const { data, isFetching: isLatestPhonesDataFetching } = useQuery({
     queryFn: fetchLatestPhonesData,
     queryKey: ["latest"],
   });
+  const [slides, setSlides] = useState(0);
+
+  useEffect(() => {
+    if (window.screen.width > 768 && data) {
+      setSlides(data?.latestPhones.length / 2);
+    }
+
+    if (window.screen.width <= 768 && data) {
+      setSlides(data?.latestPhones.length / 3);
+    }
+  }, [data]);
 
   return (
     <main className="flex lg:flex-col min-h-screen">
       <div className="flex lg:flex-row gap-4 min-h-screen">
         <Sidebar />
-        <div className="hidden lg:flex lg:flex-col gap-4 xl:basis-[80%] 2xl:basis-[70%] p-4">
+        <div className="hidden lg:flex lg:flex-col gap-4 xl:basis-[80%] 2xl:basis-[100%] p-4">
           <section className="flex flex-col gap-8">
-            <h1 className="font-bold xl:text-4xl">Latest devices</h1>
+            <h1 className="font-bold xl:text-4xl 2xl:text-5xl">
+              Latest devices
+            </h1>
             {!isLatestPhonesDataFetching ? (
-              <Swiper
-                slidesPerView={data!.latestPhones?.length / 3}
-                spaceBetween={20}
-                className="xl:max-w-[70vw]"
-              >
+              <div className="grid grid-cols-2 gap-8 p-4 lg:grid-cols-6 2xl:grid-cols-5 lg:p-4 lg:gap-4">
                 {data?.latestPhones.map((phone) => (
-                  <SwiperSlide key={phone.model} className="p-2">
-                    <ProductCard
-                      product_title={phone.model}
-                      imageSrc={phone.image}
-                      link={phone.link}
-                    />
-                  </SwiperSlide>
+                  <ProductCard
+                    imageSrc={phone.image}
+                    link={phone.link}
+                    product_title={phone.model}
+                    key={phone.link}
+                  />
                 ))}
-              </Swiper>
+              </div>
             ) : (
               <div className="min-h-[240px] max-w-[240px] max-h-[240px] min-w-[240px]" />
             )}
           </section>
           <section className="flex flex-col gap-8">
-            <h1 className="font-bold xl:text-4xl">Phones in store right now</h1>
+            <h1 className="font-bold xl:text-4xl 2xl:text-5xl">
+              Phones in store right now
+            </h1>
             {!isLatestPhonesDataFetching ? (
-              <Swiper
-                slidesPerView={data!.phonesInStore?.length / 3}
-                spaceBetween={20}
-                className="xl:max-w-[70vw]"
-              >
+              <div className="grid grid-cols-2 gap-8 p-4 lg:grid-cols-6 2xl:grid-cols-5 lg:p-4 lg:gap-4">
                 {data?.phonesInStore.map((phone) => (
-                  <SwiperSlide key={phone.model} className="p-2">
-                    <ProductCard
-                      product_title={phone.model}
-                      imageSrc={phone.image}
-                      link={phone.link}
-                    />
-                  </SwiperSlide>
+                  <ProductCard
+                    imageSrc={phone.image}
+                    link={phone.link}
+                    product_title={phone.model}
+                    key={phone.link}
+                  />
                 ))}
-              </Swiper>
+              </div>
             ) : (
               <div className="min-h-[240px] max-w-[240px] max-h-[240px] min-w-[240px]" />
             )}

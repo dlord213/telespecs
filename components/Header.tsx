@@ -1,6 +1,5 @@
 "use client";
 
-import { refreshSession } from "@/app/lib/session";
 import useAuth from "@/hooks/useAuth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -24,7 +23,7 @@ export default function Header() {
   }, [client_instance]);
 
   return (
-    <nav className="flex flex-col gap-4 p-4 border-b sticky top-0 bg-[#fafafa] lg:static lg:justify-between lg:items-center lg:flex-row lg:gap-0">
+    <nav className="flex flex-col gap-4 p-4 border-b sticky top-0 bg-[#fafafa] z-50 lg:justify-between lg:items-center lg:flex-row lg:gap-0">
       <div className="flex flex-row justify-between items-center">
         <Link href="/">
           <h1 className="font-black text-xl lg:text-2xl text-rose-500">

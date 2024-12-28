@@ -24,7 +24,7 @@ export default function Page() {
     <main className="flex lg:flex-col min-h-screen">
       <div className="flex lg:flex-row gap-4 min-h-screen">
         <Sidebar />
-        <div className="grid lg:grid-cols-6 lg:p-4 lg:gap-4">
+        <div className="grid lg:grid-cols-6 2xl:grid-cols-7 2xl:place-content-start lg:p-4 lg:gap-4">
           {data?.map((phone) => (
             <ProductCard
               imageSrc={phone.img_src}

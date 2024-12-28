@@ -164,7 +164,7 @@ export default function Page() {
       </div>
     </>,
     <>
-      <div className="flex flex-col flex-wrap gap-8 p-8">
+      <div className="lg:flex lg:flex-col lg:basis-[70%] lg:flex-wrap lg:gap-8 lg:p-8 2xl:grid 2xl:grid-cols-2 2xl:place-items-center">
         {deviceSpecificationsData?.pictures.map((src) => (
           <img
             src={src}
@@ -179,29 +179,25 @@ export default function Page() {
   if (isFetching) {
     return (
       <main className="flex flex-col lg:flex-row lg:gap-8">
-        <div className="hidden lg:sticky lg:top-0 lg:flex flex-col gap-4 lg:basis-[30%] lg:p-8 lg:h-full">
-          
-        </div>
-        <div className="sticky top-0 flex flex-col gap-4 lg:basis-[70%] lg:p-8 h-full p-4">
-          
-        </div>
+        <div className="hidden lg:sticky lg:top-0 lg:flex flex-col gap-4 lg:basis-[30%] lg:p-8 lg:h-full"></div>
+        <div className="sticky top-0 flex flex-col gap-4 lg:basis-[70%] lg:p-8 h-full p-4"></div>
       </main>
     );
   }
 
   return (
     <main className="flex flex-col gap-2 lg:flex-row lg:gap-8">
-      <div className="lg:sticky top-0 p-4 flex flex-col justify-center lg:justify-start items-center lg:items-start gap-4 lg:basis-[30%] lg:p-8 h-full">
+      <div className="lg:sticky lg:top-16 p-4 flex flex-col justify-center lg:justify-start items-center lg:items-start lg:gap-4 2xl:gap-8 lg:basis-[30%] lg:p-8 h-full">
         <img
-          src={deviceSpecificationsData?.heading.image}
-          className="max-w-[144px] lg:max-w-[240px] w-full"
+          src={deviceSpecificationsData?.pictures[0]}
+          className="max-w-[144px] lg:max-w-[240px] 2xl:max-w-[768px] w-full"
         />
-        <h1 className="font-black lg:text-4xl">
+        <h1 className="font-black lg:text-4xl 2xl:text-5xl">
           {deviceSpecificationsData?.heading.model}
         </h1>
         <ul className="flex flex-col list-none gap-4">
           <button
-            className="flex flex-row gap-4 text-left transition-all duration-200 delay-0 hover:text-red-500"
+            className="flex flex-row gap-4 text-left transition-all duration-200 delay-0 hover:text-red-500 2xl:text-xl"
             onClick={() => setIndex(0)}
           >
             <span
@@ -216,7 +212,7 @@ export default function Page() {
             Specifications
           </button>
           <button
-            className="flex flex-row gap-4 text-left transition-all duration-200 delay-0 hover:text-red-500"
+            className="flex flex-row gap-4 text-left transition-all duration-200 delay-0 hover:text-red-500 2xl:text-xl"
             onClick={() => setIndex(1)}
             style={{
               display: deviceSpecificationsData?.links.pictures
@@ -236,7 +232,7 @@ export default function Page() {
             Pictures
           </button>
           <button
-            className="flex flex-row gap-4 text-left transition-all duration-200 delay-0 hover:text-red-500"
+            className="flex flex-row gap-4 text-left transition-all duration-200 delay-0 hover:text-red-500 2xl:text-xl"
             onClick={() => setIndex(2)}
           >
             <span
