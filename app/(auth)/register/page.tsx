@@ -1,15 +1,14 @@
 "use client";
 
 import { verifySession } from "@/app/lib/session";
-import useAuth from "@/hooks/useAuth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import { MdAccountBox, MdEmail, MdPassword } from "react-icons/md";
 import { handleRegister } from "./actions";
+import client_instance from "@/app/lib/client";
 
 export default function Page() {
-  const { client_instance } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -23,7 +22,7 @@ export default function Page() {
     };
 
     checkSession();
-  }, [client_instance]);
+  }, []);
 
   if (isLoading) {
     return (
@@ -33,9 +32,12 @@ export default function Page() {
 
   return (
     <main className="flex flex-col justify-center items-center min-h-screen">
-      <section className="flex flex-col max-w-[30vw]">
+      <section className="flex flex-col lg:max-w-[30vw]">
         <div className="flex flex-col">
-          <Link className="lg:text-3xl text-red-500 font-black" href="/">
+          <Link
+            className="lg:text-3xl text-xl text-red-500 font-black"
+            href="/"
+          >
             TeleSpecs
           </Link>
         </div>
@@ -50,7 +52,7 @@ export default function Page() {
             <input
               type="text"
               id="input-group-1"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
               placeholder="Username"
               name="name"
               required
@@ -63,7 +65,7 @@ export default function Page() {
             <input
               type="text"
               id="input-group-1"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
               placeholder="name@flowbite.com"
               name="email"
               required
@@ -76,7 +78,7 @@ export default function Page() {
             <input
               type="password"
               id="input-group-1"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
               placeholder="***********"
               name="password"
               required
@@ -88,10 +90,7 @@ export default function Page() {
               className="cursor-pointer p-2 text-red-50 bg-red-500 rounded-md"
               value="Register"
             />
-            <Link
-              href="/register"
-              className="text-sm animate-pulse text-red-700"
-            >
+            <Link href="/login" className="text-sm animate-pulse text-red-700">
               Already have an account?
             </Link>
           </div>

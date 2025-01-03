@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import fetchDeviceSpecifications from "@/utils/fetchDeviceSpecifications";
+import client_instance from "@/app/lib/client";
 
 export default function Page() {
   const searchParams = useSearchParams();
@@ -13,6 +14,26 @@ export default function Page() {
   const { data: deviceSpecificationsData, isFetching } = useQuery({
     queryKey: [deviceLink, "device"],
     queryFn: () => fetchDeviceSpecifications(deviceLink!),
+  });
+
+  const { data: reviewsData, isFetching: isReviewsFetching } = useQuery({
+    queryKey: [deviceLink, "reviews"],
+    queryFn: async () => {
+      try {
+        const reviews = await client_instance
+          .collection("review")
+          .getList(1, 50, {
+            filter: `device_id = '${deviceLink?.toString()}'`,
+            expand: "user, users",
+          });
+
+        console.log(reviews);
+
+        return reviews;
+      } catch (err) {
+        return err;
+      }
+    },
   });
 
   const sections = [
@@ -174,6 +195,43 @@ export default function Page() {
         ))}
       </div>
     </>,
+    <>
+      {reviewsData! ? (
+        <>
+          <div className="flex flex-col gap-2 m-2 lg:basis-[70%] lg:p-8 lg:m-0">
+            {client_instance.authStore.isValid ? (
+              <div className="flex flex-row gap-2">
+                <button
+                  type="submit"
+                  className="cursor-pointer p-2 text-red-50 bg-red-500 rounded-md"
+                >
+                  Post a review
+                </button>
+              </div>
+            ) : null}
+            {reviewsData!.items ? (
+              reviewsData.items.map((review) => (
+                <section
+                  className="flex flex-col gap-2 border rounded-md p-4 shadow"
+                  key={review.id}
+                >
+                  <div className="flex flex-row justify-between">
+                    <p className="text-sm text-gray-400">
+                      {review.expand.user.name}
+                    </p>
+                    <p className="text-sm text-gray-400">{review.updated}</p>
+                  </div>
+                  <h1 className="text-xl font-bold">{review.title}</h1>
+                  <p className="my-2">{review.description}</p>
+                </section>
+              ))
+            ) : (
+              <h1>No reviews yet.</h1>
+            )}
+          </div>
+        </>
+      ) : null}
+    </>,
   ];
 
   if (isFetching) {
@@ -233,7 +291,11 @@ export default function Page() {
           </button>
           <button
             className="flex flex-row gap-4 text-left transition-all duration-200 delay-0 hover:text-red-500 2xl:text-xl"
-            onClick={() => setIndex(2)}
+            onClick={() => {
+              if (!isReviewsFetching) {
+                setIndex(2);
+              }
+            }}
           >
             <span
               className="transition-all delay-0 duration-300 -z-50"

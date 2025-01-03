@@ -1,16 +1,15 @@
 "use client";
 
 import Header from "@/components/Header";
-import useAuth from "@/hooks/useAuth";
 
 import { verifySession } from "@/app/lib/session";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import { RiAccountPinBoxLine } from "react-icons/ri";
 import { MdAccountCircle } from "react-icons/md";
+import client_instance from "@/app/lib/client";
 
 export default function Page() {
-  const { client_instance } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -25,7 +24,7 @@ export default function Page() {
     };
 
     checkSession();
-  }, [client_instance]);
+  }, []);
 
   if (isLoading) {
     return (

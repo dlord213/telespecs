@@ -1,10 +1,14 @@
 import PocketBase from "pocketbase";
 
 export async function verifySession(client_instance: PocketBase) {
-  if (client_instance.authStore.isValid) {
-    const res = await client_instance.collection("users").authRefresh();
-    return res;
-  } else {
+  try {
+    if (client_instance.authStore.isValid) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error("Error verifying session:", error);
     return false;
   }
 }
