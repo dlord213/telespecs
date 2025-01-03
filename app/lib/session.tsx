@@ -33,6 +33,7 @@ export async function registerAccount(
   client_instance: PocketBase
 ) {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const record = await client_instance.collection("users").create(data);
     const authData = await client_instance
       .collection("users")

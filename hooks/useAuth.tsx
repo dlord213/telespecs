@@ -9,7 +9,7 @@ interface AuthInterface {
 }
 
 const useAuth = create<AuthInterface>()(
-  immer((set, get) => ({
+  immer(() => ({
     client_instance: new PocketBase("https://telespecs.pockethost.io/"),
     token: "",
     id: "",

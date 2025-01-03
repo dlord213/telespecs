@@ -1,30 +1,16 @@
 "use client";
 
-import "swiper/css";
 import ProductCard from "@/components/ProductCard";
 import Sidebar from "@/components/Sidebar";
 import fetchLatestPhonesData from "@/utils/fetchLatestPhonesData";
 
-import { Swiper, SwiperSlide } from "swiper/react";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
 
 export default function Home() {
   const { data, isFetching: isLatestPhonesDataFetching } = useQuery({
     queryFn: fetchLatestPhonesData,
     queryKey: ["latest"],
   });
-  const [slides, setSlides] = useState(0);
-
-  useEffect(() => {
-    if (window.screen.width > 768 && data) {
-      setSlides(data?.latestPhones.length / 2);
-    }
-
-    if (window.screen.width <= 768 && data) {
-      setSlides(data?.latestPhones.length / 3);
-    }
-  }, [data]);
 
   return (
     <main className="flex lg:flex-col min-h-screen">

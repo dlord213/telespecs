@@ -41,7 +41,6 @@ export default async function fetchLatestPhonesData() {
       phonesInStore.push({ model, image, link });
     });
 
-    // Combine results
     const result = {
       latestPhones,
       phonesInStore,

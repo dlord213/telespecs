@@ -12,7 +12,7 @@ export default function Page() {
 
   const { data: deviceSpecificationsData, isFetching } = useQuery({
     queryKey: [deviceLink, "device"],
-    queryFn: () => fetchDeviceSpecifications(deviceLink),
+    queryFn: () => fetchDeviceSpecifications(deviceLink!),
   });
 
   const sections = [

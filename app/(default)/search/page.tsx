@@ -12,7 +12,7 @@ export default function Page() {
   const query = searchParams.get("q");
 
   const { data, isFetching } = useQuery({
-    queryFn: () => fetchDevicesByQuery(query),
+    queryFn: () => fetchDevicesByQuery(query!),
     queryKey: [query, "search"],
   });
 

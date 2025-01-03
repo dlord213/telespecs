@@ -49,7 +49,7 @@ export default function Header() {
         className="flex lg:flex-row flex-col gap-4 items-center"
         onSubmit={handleSearchSubmit}
       >
-        <div className="relative">
+        <div className="relative w-full lg:w-fit">
           <MdSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
           <input
             type="text"

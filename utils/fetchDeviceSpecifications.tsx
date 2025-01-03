@@ -1,6 +1,56 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
 
+interface DeviceProps {
+  links: {
+    pictures: string | undefined;
+  };
+  heading: {
+    model: string;
+    image: string | undefined;
+    release_date: string;
+    android_ver: string;
+    storage: string;
+    display: { inch: string; pixels: string };
+    camera: { mp: string; resolution: string };
+    chipset: { ram: string; cpu: string };
+    battery: { capacity: string; charging_rate: string };
+  };
+  network: { technology: string };
+  launch: { announced: string; status: string };
+  body: { dimensions: string; weight: string; build: string; SIM: string };
+  display: {
+    type: string;
+    size: string;
+    resolution: string;
+    protection: string;
+  };
+  platform: { OS: string; chipset: string; CPU: string; GPU: string };
+  memory: { card_slot: string; internal: string };
+  main_camera: { cameras: string[]; features: string; video: string };
+  selfie_camera: { camera: string; features: string; video: string };
+  sound: { speaker: string; jack: string; misc: string[] };
+  communications: {
+    wlan: string;
+    bluetooth: string;
+    positioning: string;
+    NFC: string;
+    infrared_port: string;
+    radio: string;
+    usb: string;
+  };
+  features: string;
+  battery: { type: string; charging: string[] };
+  misc: { colors: string; models: string; SAR: string; price: string };
+  tests: {
+    performance: string[];
+    display: string;
+    camera: string;
+    loudspeaker: string;
+  };
+  pictures: string[];
+}
+
 const fetchDeviceSpecifications = async (deviceLink: string | undefined) => {
   if (!deviceLink) throw new Error("Device link is required.");
 
@@ -15,7 +65,7 @@ const fetchDeviceSpecifications = async (deviceLink: string | undefined) => {
 
   const $ = cheerio.load(data.contents);
 
-  const device = {
+  const device: DeviceProps = {
     links: {
       pictures: $(".article-info-meta a:contains('Pictures')").attr("href"),
     },
