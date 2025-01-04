@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { FormEvent, useState } from "react";
+import { FormEvent, Suspense, useState } from "react";
 import fetchDeviceSpecifications from "@/utils/fetchDeviceSpecifications";
 import client_instance from "@/app/lib/client";
 import { MdAddComment } from "react-icons/md";
@@ -394,81 +394,85 @@ export default function Page() {
 
   if (isFetching) {
     return (
-      <main className="flex flex-col lg:flex-row lg:gap-8">
-        <div className="hidden lg:sticky lg:top-0 lg:flex flex-col gap-4 lg:basis-[30%] lg:p-8 lg:h-full"></div>
-        <div className="sticky top-0 flex flex-col gap-4 lg:basis-[70%] lg:p-8 h-full p-4"></div>
-      </main>
+      <Suspense>
+        <main className="flex flex-col lg:flex-row lg:gap-8">
+          <div className="hidden lg:sticky lg:top-0 lg:flex flex-col gap-4 lg:basis-[30%] lg:p-8 lg:h-full"></div>
+          <div className="sticky top-0 flex flex-col gap-4 lg:basis-[70%] lg:p-8 h-full p-4"></div>
+        </main>
+      </Suspense>
     );
   }
 
   return (
-    <main className="flex flex-col gap-2 lg:flex-row lg:gap-8">
-      <div className="lg:sticky lg:top-16 p-4 flex flex-col justify-center lg:justify-start items-center lg:items-start lg:gap-4 2xl:gap-8 lg:basis-[30%] lg:p-8 h-full">
-        <img
-          src={deviceSpecificationsData?.pictures[0]}
-          className="max-w-[144px] lg:max-w-[240px] 2xl:max-w-[768px] w-full"
-        />
-        <h1 className="font-black lg:text-4xl 2xl:text-5xl">
-          {deviceSpecificationsData?.heading.model}
-        </h1>
-        <ul className="flex flex-col list-none gap-4">
-          <button
-            className="flex flex-row gap-4 text-left transition-all duration-200 delay-0 hover:text-red-500 2xl:text-xl"
-            onClick={() => setIndex(0)}
-          >
-            <span
-              className="transition-all delay-0 duration-300 -z-50"
+    <Suspense>
+      <main className="flex flex-col gap-2 lg:flex-row lg:gap-8">
+        <div className="lg:sticky lg:top-16 p-4 flex flex-col justify-center lg:justify-start items-center lg:items-start lg:gap-4 2xl:gap-8 lg:basis-[30%] lg:p-8 h-full">
+          <img
+            src={deviceSpecificationsData?.pictures[0]}
+            className="max-w-[144px] lg:max-w-[240px] 2xl:max-w-[768px] w-full"
+          />
+          <h1 className="font-black lg:text-4xl 2xl:text-5xl">
+            {deviceSpecificationsData?.heading.model}
+          </h1>
+          <ul className="flex flex-col list-none gap-4">
+            <button
+              className="flex flex-row gap-4 text-left transition-all duration-200 delay-0 hover:text-red-500 2xl:text-xl"
+              onClick={() => setIndex(0)}
+            >
+              <span
+                className="transition-all delay-0 duration-300 -z-50"
+                style={{
+                  scale: index == 0 ? 3 : 1,
+                  color: index == 0 ? "#ef4444" : "initial",
+                }}
+              >
+                •
+              </span>
+              Specifications
+            </button>
+            <button
+              className="flex flex-row gap-4 text-left transition-all duration-200 delay-0 hover:text-red-500 2xl:text-xl"
+              onClick={() => setIndex(1)}
               style={{
-                scale: index == 0 ? 3 : 1,
-                color: index == 0 ? "#ef4444" : "initial",
+                display: deviceSpecificationsData?.links.pictures
+                  ? "flex"
+                  : "none",
               }}
             >
-              •
-            </span>
-            Specifications
-          </button>
-          <button
-            className="flex flex-row gap-4 text-left transition-all duration-200 delay-0 hover:text-red-500 2xl:text-xl"
-            onClick={() => setIndex(1)}
-            style={{
-              display: deviceSpecificationsData?.links.pictures
-                ? "flex"
-                : "none",
-            }}
-          >
-            <span
-              className="transition-all delay-0 duration-300 -z-50"
-              style={{
-                scale: index == 1 ? 3 : 1,
-                color: index == 1 ? "#ef4444" : "initial",
+              <span
+                className="transition-all delay-0 duration-300 -z-50"
+                style={{
+                  scale: index == 1 ? 3 : 1,
+                  color: index == 1 ? "#ef4444" : "initial",
+                }}
+              >
+                •
+              </span>
+              Pictures
+            </button>
+            <button
+              className="flex flex-row gap-4 text-left transition-all duration-200 delay-0 hover:text-red-500 2xl:text-xl"
+              onClick={() => {
+                if (!isReviewsFetching) {
+                  setIndex(2);
+                }
               }}
             >
-              •
-            </span>
-            Pictures
-          </button>
-          <button
-            className="flex flex-row gap-4 text-left transition-all duration-200 delay-0 hover:text-red-500 2xl:text-xl"
-            onClick={() => {
-              if (!isReviewsFetching) {
-                setIndex(2);
-              }
-            }}
-          >
-            <span
-              className="transition-all delay-0 duration-300 -z-50"
-              style={{
-                scale: index == 2 ? 3 : 1,
-                color: index == 2 ? "#ef4444" : "initial",
-              }}
-            >
-              •
-            </span>
-            Reviews
-          </button>
-        </ul>
-      </div>
-      {sections[index]}
-    </main>
+              <span
+                className="transition-all delay-0 duration-300 -z-50"
+                style={{
+                  scale: index == 2 ? 3 : 1,
+                  color: index == 2 ? "#ef4444" : "initial",
+                }}
+              >
+                •
+              </span>
+              Reviews
+            </button>
+          </ul>
+        </div>
+        {sections[index]}
+      </main>
+    </Suspense>
   );
 }
