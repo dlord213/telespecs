@@ -2,14 +2,12 @@
 
 import Header from "@/components/Header";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { RiAccountPinBoxLine } from "react-icons/ri";
 import { MdAccountCircle } from "react-icons/md";
 import client_instance from "@/app/lib/client";
 
 export default function Page() {
-  const [account, setAccount] = useState();
-
   useEffect(() => {}, []);
 
   return (
