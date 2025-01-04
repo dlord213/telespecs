@@ -6,6 +6,7 @@ import { FormEvent, useState } from "react";
 import fetchDeviceSpecifications from "@/utils/fetchDeviceSpecifications";
 import client_instance from "@/app/lib/client";
 import { MdAddComment } from "react-icons/md";
+import { ReviewsResponse } from "@/types/Review";
 
 export default function Page() {
   const searchParams = useSearchParams();
@@ -34,7 +35,7 @@ export default function Page() {
     data: reviewsData,
     isFetching: isReviewsFetching,
     refetch: refetchReviews,
-  } = useQuery({
+  } = useQuery<ReviewsResponse>({
     queryKey: [deviceLink, "reviews"],
     queryFn: async () => {
       try {
