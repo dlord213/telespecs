@@ -1,22 +1,40 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { FormEvent, useState } from "react";
 import fetchDeviceSpecifications from "@/utils/fetchDeviceSpecifications";
 import client_instance from "@/app/lib/client";
+import { MdAddComment } from "react-icons/md";
 
 export default function Page() {
   const searchParams = useSearchParams();
   const deviceLink = searchParams.get("device");
   const [index, setIndex] = useState(0);
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [isPosting, setIsPosting] = useState(false);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+
+  const [files, setFiles] = useState<File[]>([]);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const chosenFiles = event.target.files;
+    if (chosenFiles) {
+      setFiles(Array.from(chosenFiles));
+    }
+  };
 
   const { data: deviceSpecificationsData, isFetching } = useQuery({
     queryKey: [deviceLink, "device"],
     queryFn: () => fetchDeviceSpecifications(deviceLink!),
   });
 
-  const { data: reviewsData, isFetching: isReviewsFetching } = useQuery({
+  const {
+    data: reviewsData,
+    isFetching: isReviewsFetching,
+    refetch: refetchReviews,
+  } = useQuery({
     queryKey: [deviceLink, "reviews"],
     queryFn: async () => {
       try {
@@ -35,6 +53,44 @@ export default function Page() {
       }
     },
   });
+
+  const postReviewMutation = useMutation({
+    mutationFn: async () => {
+      try {
+        const record = await client_instance.collection("review").create({
+          device_id: deviceLink,
+          user: client_instance.authStore.model?.id,
+          title: title,
+          description: description,
+          pictures: files,
+        });
+
+        return record;
+      } catch (err) {
+        return err;
+      }
+    },
+    onMutate: () => {
+      setIsPosting(true);
+    },
+    onSuccess: () => {
+      setIsPosting(false);
+      setTitle("");
+      setDescription("");
+      setFiles([]);
+      setIsOpen(false);
+      refetchReviews();
+    },
+    onError: () => {
+      setIsPosting(false);
+      alert("Failed to post review. Please try again.");
+    },
+  });
+
+  const handlePostSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    postReviewMutation.mutate();
+  };
 
   const sections = [
     <>
@@ -199,32 +255,133 @@ export default function Page() {
       {reviewsData! ? (
         <>
           <div className="flex flex-col gap-2 m-2 lg:basis-[70%] lg:p-8 lg:m-0">
-            {client_instance.authStore.isValid ? (
-              <div className="flex flex-row gap-2">
-                <button
-                  type="submit"
-                  className="cursor-pointer p-2 text-red-50 bg-red-500 rounded-md"
-                >
-                  Post a review
-                </button>
-              </div>
-            ) : null}
-            {reviewsData!.items ? (
-              reviewsData.items.map((review) => (
-                <section
-                  className="flex flex-col gap-2 border rounded-md p-4 shadow"
-                  key={review.id}
-                >
-                  <div className="flex flex-row justify-between">
-                    <p className="text-sm text-gray-400">
-                      {review.expand.user.name}
-                    </p>
-                    <p className="text-sm text-gray-400">{review.updated}</p>
-                  </div>
-                  <h1 className="text-xl font-bold">{review.title}</h1>
-                  <p className="my-2">{review.description}</p>
-                </section>
-              ))
+            {client_instance.authStore.isValid && (
+              <>
+                <div className="flex flex-row gap-2">
+                  <button
+                    className="flex flex-row gap-2 cursor-pointer p-2 text-red-50 bg-red-500 rounded-md"
+                    onClick={() => setIsOpen((prev) => !prev)}
+                  >
+                    <MdAddComment size={24} />
+                    <p>Post a review</p>
+                  </button>
+                </div>
+                {modalIsOpen && (
+                  <form
+                    className="flex flex-col gap-2"
+                    onSubmit={handlePostSubmit}
+                  >
+                    <input
+                      type="text"
+                      name="title"
+                      className="border rounded-md p-2"
+                      placeholder="Title"
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                      required
+                    />
+                    <textarea
+                      name="description"
+                      rows={3}
+                      className="border rounded-md p-2"
+                      placeholder="Description"
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                      required
+                    />
+                    <div className="flex items-center justify-center w-full">
+                      <label
+                        className={`flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 ${
+                          files.length > 0 ? "overflow-y-auto" : ""
+                        }`}
+                      >
+                        {files.length === 0 ? (
+                          <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                            <p className="mb-2 text-sm text-gray-500">
+                              <span className="font-semibold">
+                                Click to upload
+                              </span>{" "}
+                              or drag and drop
+                            </p>
+                            <p className="text-xs text-gray-500">
+                              SVG, PNG, JPG, or GIF (MAX. 800x400px)
+                            </p>
+                          </div>
+                        ) : (
+                          <div className="flex flex-wrap gap-2 p-2">
+                            {files.map((file, index) => (
+                              <div
+                                key={index}
+                                className="w-20 h-20 border rounded-md p-2 bg-white shadow"
+                              >
+                                {file.type.startsWith("image/") ? (
+                                  <img
+                                    src={URL.createObjectURL(file)}
+                                    alt={file.name}
+                                    className="w-full h-full object-cover rounded-md"
+                                  />
+                                ) : (
+                                  <span className="text-xs text-gray-700">
+                                    {file.name}
+                                  </span>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                        <input
+                          id="dropzone-file"
+                          type="file"
+                          className="hidden"
+                          multiple
+                          onChange={handleFileChange}
+                          accept="image/*"
+                        />
+                      </label>
+                    </div>
+                    <button
+                      type="submit"
+                      disabled={isPosting}
+                      className="p-2 border bg-red-500 text-red-100 rounded-md hover:cursor-pointer"
+                    >
+                      {isPosting ? "Posting..." : "Post"}
+                    </button>
+                  </form>
+                )}
+              </>
+            )}
+            {reviewsData?.items?.length > 0 ? (
+              reviewsData.items.map((review) => {
+                const pictures = [];
+                for (let i = 0; i < review.pictures.length; i++) {
+                  const pictureURL = client_instance.files.getURL(
+                    review,
+                    review.pictures[i]
+                  );
+                  pictures.push(pictureURL);
+                }
+
+                return (
+                  <section
+                    className="flex flex-col gap-2 border rounded-md p-4 shadow"
+                    key={review.id}
+                  >
+                    <div className="flex flex-row justify-between">
+                      <p className="text-sm text-gray-400">
+                        {review.expand.user.name}
+                      </p>
+                      <p className="text-sm text-gray-400">{review.updated}</p>
+                    </div>
+                    <h1 className="text-xl font-bold">{review.title}</h1>
+                    <p className="my-2">{review.description}</p>
+                    <div className="flex flex-row gap-2 flex-wrap">
+                      {pictures.map((e) => (
+                        <img src={e} key={e} className="lg:max-w-[240px]" />
+                      ))}
+                    </div>
+                  </section>
+                );
+              })
             ) : (
               <h1>No reviews yet.</h1>
             )}

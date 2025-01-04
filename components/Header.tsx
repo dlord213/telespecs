@@ -68,7 +68,7 @@ export default function Header() {
           </div>
           <div className="flex flex-row gap-2 items-center">
             <Link
-              className="transition-all delay-0 duration-200 hover:scale-105"
+              className="transition-all delay-0 duration-200 hover:scale-105 hidden"
               href="/profile"
             >
               <MdAccountCircle size={36} />
