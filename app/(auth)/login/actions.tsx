@@ -11,9 +11,17 @@ export const handleLogin = async (
 
   const formData = new FormData(e.currentTarget);
 
+  const email = formData.get("email");
+  const password = formData.get("password");
+
+  if (typeof email !== "string" || typeof password !== "string") {
+    console.error("Invalid form data");
+    return;
+  }
+
   const data = {
-    email: formData.get("email"),
-    password: formData.get("password"),
+    email,
+    password,
   };
 
   const account = await loginAccount(data, client_instance);
