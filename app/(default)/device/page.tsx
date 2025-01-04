@@ -6,7 +6,7 @@ import { FormEvent, useState } from "react";
 import fetchDeviceSpecifications from "@/utils/fetchDeviceSpecifications";
 import client_instance from "@/app/lib/client";
 import { MdAddComment } from "react-icons/md";
-import { ReviewsResponse } from "@/types/Review";
+import { ListResult, RecordModel } from "pocketbase";
 
 export default function Page() {
   const searchParams = useSearchParams();
@@ -35,9 +35,9 @@ export default function Page() {
     data: reviewsData,
     isFetching: isReviewsFetching,
     refetch: refetchReviews,
-  } = useQuery<ReviewsResponse>({
+  } = useQuery({
     queryKey: [deviceLink, "reviews"],
-    queryFn: async () => {
+    queryFn: async (): Promise<ListResult<RecordModel>> => {
       try {
         const reviews = await client_instance
           .collection("review")
@@ -50,7 +50,7 @@ export default function Page() {
 
         return reviews;
       } catch (err) {
-        return err;
+        throw err;
       }
     },
   });
@@ -369,7 +369,7 @@ export default function Page() {
                   >
                     <div className="flex flex-row justify-between">
                       <p className="text-sm text-gray-400">
-                        {review.expand.user.name}
+                        {review.expand!.user.name}
                       </p>
                       <p className="text-sm text-gray-400">{review.updated}</p>
                     </div>
