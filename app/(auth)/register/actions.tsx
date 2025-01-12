@@ -14,14 +14,11 @@ export const handleRegister = async (
   const name = formData.get("name");
   const email = formData.get("email");
   const password = formData.get("password");
-  const passwordConfirm = formData.get("passwordConfirm");
 
-  // Ensure all fields are strings
   if (
     typeof name !== "string" ||
     typeof email !== "string" ||
-    typeof password !== "string" ||
-    typeof passwordConfirm !== "string"
+    typeof password !== "string"
   ) {
     console.error("Invalid form data");
     return;
@@ -31,7 +28,7 @@ export const handleRegister = async (
     name,
     email,
     password,
-    passwordConfirm,
+    passwordConfirm: password,
   };
 
   const account = await registerAccount(data, client_instance);

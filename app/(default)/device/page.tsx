@@ -7,6 +7,7 @@ import fetchDeviceSpecifications from "@/utils/fetchDeviceSpecifications";
 import client_instance from "@/app/lib/client";
 import { MdAddComment } from "react-icons/md";
 import { ListResult, RecordModel } from "pocketbase";
+import { ThreeDot } from "react-loading-indicators";
 
 function DeviceContent() {
   const searchParams = useSearchParams();
@@ -95,151 +96,153 @@ function DeviceContent() {
 
   const sections = [
     <>
-      <div className="flex flex-col gap-2 m-2 lg:basis-[70%] lg:p-8 lg:m-0">
-        <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
-          <h1 className="lg:text-2xl text-red-500 font-bold">Network</h1>
-          <div className="grid grid-cols-2">
-            <p>Technology</p>
-            <p>{deviceSpecificationsData?.network.technology}</p>
-          </div>
-        </section>
-        <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
-          <h1 className="lg:text-2xl text-red-500 font-bold">Launch</h1>
-          <div className="grid grid-cols-2">
-            <p>Announced</p>
-            <p>{deviceSpecificationsData?.launch.announced}</p>
-          </div>
-          <div className="grid grid-cols-2">
-            <p>Status</p>
-            <p>{deviceSpecificationsData?.launch.status}</p>
-          </div>
-        </section>
-        <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
-          <h1 className="lg:text-2xl text-red-500 font-bold">Body</h1>
-          <div className="grid grid-cols-2">
-            <p>Dimensions</p>
-            <p>{deviceSpecificationsData?.body.dimensions}</p>
-          </div>
-          <div className="grid grid-cols-2">
-            <p>Build</p>
-            <p>{deviceSpecificationsData?.body.build}</p>
-          </div>
-          <div className="grid grid-cols-2">
-            <p>Weight</p>
-            <p>{deviceSpecificationsData?.body.weight}</p>
-          </div>
-          <div className="grid grid-cols-2">
-            <p>SIM</p>
-            <p>{deviceSpecificationsData?.body.SIM}</p>
-          </div>
-        </section>
-        <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
-          <h1 className="lg:text-2xl text-red-500 font-bold">Display</h1>
-          <div className="grid grid-cols-2">
-            <p>Type</p>
-            <p>{deviceSpecificationsData?.display.type}</p>
-          </div>
-          <div className="grid grid-cols-2">
-            <p>Size</p>
-            <p>{deviceSpecificationsData?.display.size}</p>
-          </div>
-          <div className="grid grid-cols-2">
-            <p>Resolution</p>
-            <p>{deviceSpecificationsData?.display.resolution}</p>
-          </div>
-          <div className="grid grid-cols-2">
-            <p>Protection</p>
-            <p>{deviceSpecificationsData?.display.protection}</p>
-          </div>
-        </section>
-        <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
-          <h1 className="lg:text-2xl text-red-500 font-bold">Platform</h1>
-          <div className="grid grid-cols-2">
-            <p>Chipset</p>
-            <p>{deviceSpecificationsData?.platform.chipset}</p>
-          </div>
-          <div className="grid grid-cols-2">
-            <p>Operating System</p>
-            <p>{deviceSpecificationsData?.platform.OS}</p>
-          </div>
-          <div className="grid grid-cols-2">
-            <p>CPU</p>
-            <p>{deviceSpecificationsData?.platform.CPU}</p>
-          </div>
-          <div className="grid grid-cols-2">
-            <p>GPU</p>
-            <p>{deviceSpecificationsData?.platform.GPU}</p>
-          </div>
-        </section>
-        <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
-          <h1 className="lg:text-2xl text-red-500 font-bold">Memory</h1>
-          <div className="grid grid-cols-2">
-            <p>Card Slot</p>
-            <p>{deviceSpecificationsData?.memory.card_slot}</p>
-          </div>
-          <div className="grid grid-cols-2">
-            <p>Internal</p>
-            <p>{deviceSpecificationsData?.memory.internal}</p>
-          </div>
-        </section>
-        <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
-          <h1 className="lg:text-2xl text-red-500 font-bold">Battery</h1>
-          <div className="grid grid-cols-2">
-            <p>Type</p>
-            <p>{deviceSpecificationsData?.battery.type}</p>
-          </div>
-          <div className="grid grid-cols-2">
-            <p>Charging</p>
-            <p>{deviceSpecificationsData?.battery.charging.toString()}</p>
-          </div>
-        </section>
-        <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
-          <h1 className="lg:text-2xl text-red-500 font-bold">Memory</h1>
-          <div className="grid grid-cols-2">
-            <p>Wi-Fi</p>
-            <p>{deviceSpecificationsData?.communications.wlan}</p>
-          </div>
-          <div className="grid grid-cols-2">
-            <p>Bluetooth</p>
-            <p>{deviceSpecificationsData?.communications.bluetooth}</p>
-          </div>
-          <div className="grid grid-cols-2">
-            <p>Radio</p>
-            <p>{deviceSpecificationsData?.communications.radio}</p>
-          </div>
-          <div className="grid grid-cols-2">
-            <p>USB</p>
-            <p>{deviceSpecificationsData?.communications.usb}</p>
-          </div>
-          <div className="grid grid-cols-2">
-            <p>Infrared</p>
-            <p>{deviceSpecificationsData?.communications.infrared_port}</p>
-          </div>
-          <div className="grid grid-cols-2">
-            <p>Positioning</p>
-            <p>{deviceSpecificationsData?.communications.positioning}</p>
-          </div>
-        </section>
-        <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
-          <h1 className="lg:text-2xl text-red-500 font-bold">Features</h1>
-          <p>{deviceSpecificationsData?.features}</p>
-        </section>
-        <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
-          <h1 className="lg:text-2xl text-red-500 font-bold">Misc</h1>
-          <div className="grid grid-cols-2">
-            <p>Colors</p>
-            <p>{deviceSpecificationsData?.misc.colors}</p>
-          </div>
-          <div className="grid grid-cols-2">
-            <p>Price</p>
-            <p>{deviceSpecificationsData?.misc.price}</p>
-          </div>
-          <div className="grid grid-cols-2">
-            <p>Models</p>
-            <p>{deviceSpecificationsData?.misc.models}</p>
-          </div>
-        </section>
-      </div>
+      {deviceSpecificationsData && (
+        <div className="flex flex-col gap-2 m-2 lg:basis-[70%] lg:p-8 lg:m-0">
+          <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
+            <h1 className="lg:text-2xl text-red-500 font-bold">Network</h1>
+            <div className="grid grid-cols-2">
+              <p>Technology</p>
+              <p>{deviceSpecificationsData?.network.technology}</p>
+            </div>
+          </section>
+          <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
+            <h1 className="lg:text-2xl text-red-500 font-bold">Launch</h1>
+            <div className="grid grid-cols-2">
+              <p>Announced</p>
+              <p>{deviceSpecificationsData?.launch.announced}</p>
+            </div>
+            <div className="grid grid-cols-2">
+              <p>Status</p>
+              <p>{deviceSpecificationsData?.launch.status}</p>
+            </div>
+          </section>
+          <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
+            <h1 className="lg:text-2xl text-red-500 font-bold">Body</h1>
+            <div className="grid grid-cols-2">
+              <p>Dimensions</p>
+              <p>{deviceSpecificationsData?.body.dimensions}</p>
+            </div>
+            <div className="grid grid-cols-2">
+              <p>Build</p>
+              <p>{deviceSpecificationsData?.body.build}</p>
+            </div>
+            <div className="grid grid-cols-2">
+              <p>Weight</p>
+              <p>{deviceSpecificationsData?.body.weight}</p>
+            </div>
+            <div className="grid grid-cols-2">
+              <p>SIM</p>
+              <p>{deviceSpecificationsData?.body.SIM}</p>
+            </div>
+          </section>
+          <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
+            <h1 className="lg:text-2xl text-red-500 font-bold">Display</h1>
+            <div className="grid grid-cols-2">
+              <p>Type</p>
+              <p>{deviceSpecificationsData?.display.type}</p>
+            </div>
+            <div className="grid grid-cols-2">
+              <p>Size</p>
+              <p>{deviceSpecificationsData?.display.size}</p>
+            </div>
+            <div className="grid grid-cols-2">
+              <p>Resolution</p>
+              <p>{deviceSpecificationsData?.display.resolution}</p>
+            </div>
+            <div className="grid grid-cols-2">
+              <p>Protection</p>
+              <p>{deviceSpecificationsData?.display.protection}</p>
+            </div>
+          </section>
+          <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
+            <h1 className="lg:text-2xl text-red-500 font-bold">Platform</h1>
+            <div className="grid grid-cols-2">
+              <p>Chipset</p>
+              <p>{deviceSpecificationsData?.platform.chipset}</p>
+            </div>
+            <div className="grid grid-cols-2">
+              <p>Operating System</p>
+              <p>{deviceSpecificationsData?.platform.OS}</p>
+            </div>
+            <div className="grid grid-cols-2">
+              <p>CPU</p>
+              <p>{deviceSpecificationsData?.platform.CPU}</p>
+            </div>
+            <div className="grid grid-cols-2">
+              <p>GPU</p>
+              <p>{deviceSpecificationsData?.platform.GPU}</p>
+            </div>
+          </section>
+          <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
+            <h1 className="lg:text-2xl text-red-500 font-bold">Memory</h1>
+            <div className="grid grid-cols-2">
+              <p>Card Slot</p>
+              <p>{deviceSpecificationsData?.memory.card_slot}</p>
+            </div>
+            <div className="grid grid-cols-2">
+              <p>Internal</p>
+              <p>{deviceSpecificationsData?.memory.internal}</p>
+            </div>
+          </section>
+          <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
+            <h1 className="lg:text-2xl text-red-500 font-bold">Battery</h1>
+            <div className="grid grid-cols-2">
+              <p>Type</p>
+              <p>{deviceSpecificationsData?.battery.type}</p>
+            </div>
+            <div className="grid grid-cols-2">
+              <p>Charging</p>
+              <p>{deviceSpecificationsData?.battery.charging.toString()}</p>
+            </div>
+          </section>
+          <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
+            <h1 className="lg:text-2xl text-red-500 font-bold">Memory</h1>
+            <div className="grid grid-cols-2">
+              <p>Wi-Fi</p>
+              <p>{deviceSpecificationsData?.communications.wlan}</p>
+            </div>
+            <div className="grid grid-cols-2">
+              <p>Bluetooth</p>
+              <p>{deviceSpecificationsData?.communications.bluetooth}</p>
+            </div>
+            <div className="grid grid-cols-2">
+              <p>Radio</p>
+              <p>{deviceSpecificationsData?.communications.radio}</p>
+            </div>
+            <div className="grid grid-cols-2">
+              <p>USB</p>
+              <p>{deviceSpecificationsData?.communications.usb}</p>
+            </div>
+            <div className="grid grid-cols-2">
+              <p>Infrared</p>
+              <p>{deviceSpecificationsData?.communications.infrared_port}</p>
+            </div>
+            <div className="grid grid-cols-2">
+              <p>Positioning</p>
+              <p>{deviceSpecificationsData?.communications.positioning}</p>
+            </div>
+          </section>
+          <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
+            <h1 className="lg:text-2xl text-red-500 font-bold">Features</h1>
+            <p>{deviceSpecificationsData?.features}</p>
+          </section>
+          <section className="flex flex-col gap-2 border rounded-md p-4 shadow">
+            <h1 className="lg:text-2xl text-red-500 font-bold">Misc</h1>
+            <div className="grid grid-cols-2">
+              <p>Colors</p>
+              <p>{deviceSpecificationsData?.misc.colors}</p>
+            </div>
+            <div className="grid grid-cols-2">
+              <p>Price</p>
+              <p>{deviceSpecificationsData?.misc.price}</p>
+            </div>
+            <div className="grid grid-cols-2">
+              <p>Models</p>
+              <p>{deviceSpecificationsData?.misc.models}</p>
+            </div>
+          </section>
+        </div>
+      )}
     </>,
     <>
       <div className="lg:flex lg:flex-col lg:basis-[70%] lg:flex-wrap lg:gap-8 lg:p-8 2xl:grid 2xl:grid-cols-2 2xl:place-items-center">
@@ -394,9 +397,8 @@ function DeviceContent() {
 
   if (isFetching) {
     return (
-      <main className="flex flex-col lg:flex-row lg:gap-8">
-        <div className="hidden lg:sticky lg:top-0 lg:flex flex-col gap-4 lg:basis-[30%] lg:p-8 lg:h-full"></div>
-        <div className="sticky top-0 flex flex-col gap-4 lg:basis-[70%] lg:p-8 h-full p-4"></div>
+      <main className="flex flex-col lg:flex-row lg:gap-8 min-h-[80vh] items-center justify-center">
+        <ThreeDot color="#ef4444" size="large" />
       </main>
     );
   }

@@ -7,6 +7,7 @@ import Sidebar from "@/components/Sidebar";
 import ProductCard from "@/components/ProductCard";
 import fetchDevicesByQuery from "@/utils/fetchDevicesByQuery";
 import { Suspense } from "react";
+import { ThreeDot } from "react-loading-indicators";
 
 function SearchContent() {
   const searchParams = useSearchParams();
@@ -18,7 +19,11 @@ function SearchContent() {
   });
 
   if (isFetching) {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-[70vh] justify-center items-center flex flex-col">
+        <ThreeDot color="#ef4444" size="large" />
+      </div>
+    );
   }
 
   return (
